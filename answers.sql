@@ -47,5 +47,29 @@ neondb=> SELECT *FROM countrylanguage WHERE language = 'Italian' AND percentage 
 (1 row)
 
 --clue #4: We're booking the first flight out – maybe we've actually got a chance to catch her this time. There are only two cities she could be flying to in the country. One is named the same as the country – that would be too obvious. We're following our gut on this one; find out what other city in that country she might be flying to.
+neondb=> SELECT * FROM city WHERE countrycode='SMR';
 -- ANSWER:
+  id  |    name    | countrycode |     district      | population 
+------+------------+-------------+-------------------+------------
+ 3170 | Serravalle | SMR         | Serravalle/Dogano |       4802
+ 3171 | San Marino | SMR         | San Marino        |       2294
+(2 rows)
+
+--clue #5: Oh no, she pulled a switch – there are two cities with very similar names, but in totally different parts of the globe! She's headed to South America as we speak; go find a city whose name is like the one we were headed to, but doesn't end the same. Find out the city, and do another search for what country it's in. Hurry!
+-- ANSWER:
+neondb=> SELECT * FROM city WHERE name LIKE 'Serra%';
+SELECT * FROM country WHERE code='BRA';
+  id  |    name    | countrycode |     district      | population 
+------+------------+-------------+-------------------+------------
+  265 | Serra      | BRA         | Espï¿½rito Santo  |     302666
+ 3170 | Serravalle | SMR         | Serravalle/Dogano |       4802
+(2 rows)
+
+ code |  name  |   continent   |    region     | surfacearea  | indepyear | population | lifeexpectancy |    gnp    |  gnpold   | localname |  governmentform  |        headofstate        | capital | code2 
+------+--------+---------------+---------------+--------------+-----------+------------+----------------+-----------+-----------+-----------+------------------+---------------------------+---------+-------
+ BRA  | Brazil | South America | South America | 8.547403e+06 |      1822 |  170115000 |           62.9 | 776739.00 | 804108.00 | Brasil    | Federal Republic | Fernando Henrique Cardoso |     211 | BR
+(1 row)
+
+--clue #6: We're close! Our South American agent says she just got a taxi at the airport, and is headed towards the capital! Look up the country's capital, and get there pronto! Send us the name of where you're headed and we'll follow right behind you!
+
 
